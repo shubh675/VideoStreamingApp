@@ -1,11 +1,43 @@
-import { useState } from "react";
-import { Button, Box } from "@mui/material";
+import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
+import { Header,Footer,SearchFeed,VideoDetails,Feed,ChannelDetails } from "./Components";
 
-const App=() => {
-  return <div className="text-3xl m-8">App
-  <h3>making some minore changes</h3>
-  <h2>more changes</h2>
-  <h3>adding h3 tag</h3>
-  </div>;
+const AppLayout= () => {
+  return <div className="layout">
+   <Header />
+   <Outlet />
+   <Footer />
+  </div>
 };
+
+const App =()=>{
+  const AppRouter = createBrowserRouter([
+    {
+      path:"/",
+      element:<AppLayout />,
+      children:[
+        {
+          path:"/",
+          element: <Feed />
+        },{
+          path:"/video/:id",
+          element:<VideoDetails />
+        },{
+          path:"channel/:id",
+          element:<ChannelDetails />
+        },
+       { path:"search/:searchText",
+        element:<SearchFeed />}
+      ]
+     
+    }
+  ]); 
+ 
+
+  return <RouterProvider router={AppRouter}/>
+}
+
+
+
+
+
 export default App;
